@@ -1,17 +1,15 @@
 package tn.esprit.java.test;
 
 import org.junit.Test;
-import tn.esprit.java.CSVmapper.AutocarriCSV;
-import tn.esprit.java.CSVmapper.AutoveicoliCSV;
-import tn.esprit.java.CSVmapper.ConcessionnarioCSV;
+import tn.esprit.java.CSVmapper.*;
 
 public class CsvTest {
 
     AutocarriCSV autocarriCSV = new AutocarriCSV();
     AutoveicoliCSV autoveicoliCSV = new AutoveicoliCSV();
     ConcessionnarioCSV concessionnarioCSV = new ConcessionnarioCSV();
-
-
+AutocarriCsvlamda autocarriCsvlamda = new AutocarriCsvlamda();
+AutocarriCsvlambda2 autocarriCsvlambda2 = new AutocarriCsvlambda2();
     @Test
     public void exportAutocTest(){
 
@@ -25,5 +23,13 @@ public class CsvTest {
     public void exportConcTest(){
         concessionnarioCSV.export();
     }
+@Test
+    public void exportlambda(){
+        autocarriCsvlamda.export();
 
+}
+@Test
+    public void export(){
+        autocarriCsvlambda2.export();
+}
 }
