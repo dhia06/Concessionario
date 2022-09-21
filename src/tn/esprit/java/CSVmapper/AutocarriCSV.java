@@ -15,7 +15,7 @@ public class AutocarriCSV {
 
 
 
-    public void export() {
+    public String export() {
         // 1. use a ropository to retrieve data
         AutocarriRepository autocRepo = new AutocarriRepository();
         List<Autocarri>  listautoc = autocRepo.getAutocarri();
@@ -53,7 +53,9 @@ public class AutocarriCSV {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
+        return null;
     }
+
 }
 
 

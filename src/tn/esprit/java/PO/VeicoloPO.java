@@ -9,7 +9,14 @@ public abstract class VeicoloPO {
     public VeicoloPO() {
     }
 
-    public VeicoloPO( String marca, String modello, long iva) {
+    public VeicoloPO(int nbr_telaio, String marca, String modello, long iva) {
+        Nbr_telaio = nbr_telaio;
+        Marca = marca;
+        Modello = modello;
+        Iva = iva;
+    }
+
+    public VeicoloPO(String marca, String modello, long iva) {
 
         Marca = marca;
         Modello = modello;

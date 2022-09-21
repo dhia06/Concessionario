@@ -80,15 +80,13 @@ public class ConcessionnarioRepository implements IConcessionnarioRepository {
         Autocarri autocarri = new Autocarri ();
         Autoveicolo autoveicolo = new Autoveicolo ();
         List<Veicolo> listv = new ArrayList<> ();
-
-        ConcessionarioMapperBo concessionarioMapperBo = new ConcessionarioMapperBo ();
-        this.concessionarioDao.insertConcessionario (concessionario.getNome (), concessionario.getCitta (), concessionario.getIndirizzo ());
-        this.autocRepo.insertAutocarri (autocarri);
-        this.autovRepo.insertAutoveicolii (autoveicolo);
         listv.add (autocarri);
         listv.add (autoveicolo);
         concessionario.setListcars (listv);
-        System.out.println ("iuuuuu" + listv);
+        System.out.println ("Listof cars" + listv);
+        this.autocRepo.insertAutocarri (autocarri);
+        this.autovRepo.insertAutoveicolii (autoveicolo);
+        this.concessionarioDao.insertConcessionario (concessionario.getIva (),concessionario.getNome (), concessionario.getCitta (), concessionario.getIndirizzo ());
     }
 
     @Override
@@ -106,7 +104,7 @@ public class ConcessionnarioRepository implements IConcessionnarioRepository {
 
     @Override
     public Concessionario getConcessionarioById(int iva) {
-        Concessionario concessionario = new Concessionario ();
+        Concessionario concessionario = null;
         List<Veicolo> listveic = new ArrayList<> ();
         List<AutocarriPO> listAutocarriPo = new ArrayList<> ();
         List<AutoveicoloPO> listAutoveicoliPo = new ArrayList<> ();
@@ -114,6 +112,7 @@ public class ConcessionnarioRepository implements IConcessionnarioRepository {
         AutocarriMapperBo autocarriMapperBo = new AutocarriMapperBo ();
         AutoveicoliMapperBo autoveicoliMapperBo = new AutoveicoliMapperBo ();
         ConcessionarioPO concessionarioPO = this.concessionarioDao.getConcessionarioById (iva);
+        if (concessionarioPO.getIva () != 0){
         concessionario = concessionarioMapperBo.mapp (concessionarioPO);
         listAutocarriPo = this.autocarriDao.findByIva (iva);
         listAutoveicoliPo = this.autoveicoloDao.findbyIva (iva);
@@ -127,7 +126,10 @@ public class ConcessionnarioRepository implements IConcessionnarioRepository {
         }
 
         concessionario.setListcars (listveic);
-        System.out.println ("test" + concessionario);
+        System.out.println ("test" + concessionario);}
+        else {
+            System.out.println ("no concessionarion exists!!!");
+        }
         return concessionario;
     }
 

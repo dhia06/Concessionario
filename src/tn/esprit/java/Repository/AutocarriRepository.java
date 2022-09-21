@@ -1,5 +1,4 @@
 package tn.esprit.java.Repository;
-
 import tn.esprit.java.BO.Autocarri;
 import tn.esprit.java.DAO.AutocarriDao;
 import tn.esprit.java.DAO.AutocarriDaoImpl;
@@ -10,7 +9,6 @@ import java.util.List;
 
 public class AutocarriRepository implements IAutocarriRepository {
      private AutocarriDao autocarriDao;
-
      public AutocarriRepository() {
          this.autocarriDao = new AutocarriDaoImpl();
      }
@@ -32,11 +30,14 @@ public class AutocarriRepository implements IAutocarriRepository {
 
     @Override
     public Autocarri findAutoByid(int nbr_telaio) {
-         Autocarri auto = new Autocarri();
+
+         Autocarri auto = null;
          AutocarriPO ss = this.autocarriDao.findAutoByid(nbr_telaio);
-         AutocarriMapperBo autocarriMapperBo = new AutocarriMapperBo();
-         auto=autocarriMapperBo.mapp(ss);
-        return auto;
+         if (ss != null){
+             AutocarriMapperBo autocarriMapperBo = new AutocarriMapperBo();
+             auto=autocarriMapperBo.mapp(ss);
+         }
+         return auto;
     }
 
     @Override
@@ -68,7 +69,7 @@ public class AutocarriRepository implements IAutocarriRepository {
 
     @Override
     public void insertAutocarri(Autocarri autocarri) {
-         autocarriDao.insertAutocarri(autocarri.getMarca(), autocarri.getModello(), (int) autocarri.getIva(), autocarri.getMax_capacity());
+         autocarriDao.insertAutocarri(autocarri.getNbr_telaio (),autocarri.getMarca(), autocarri.getModello(), (int) autocarri.getIva(), autocarri.getMax_capacity(),autocarri.getImage ());
 
          System.out.println("okeyy");
      }

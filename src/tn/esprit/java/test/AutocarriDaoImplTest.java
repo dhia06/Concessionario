@@ -1,11 +1,16 @@
 package tn.esprit.java.test;
 
+import com.mysql.cj.jdbc.Blob;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import tn.esprit.java.DAO.AutocarriDao;
 import tn.esprit.java.DAO.AutocarriDaoImpl;
 import tn.esprit.java.PO.AutocarriPO;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.*;
@@ -70,9 +75,11 @@ public class AutocarriDaoImplTest {
     }
     }
     @Test
-    public void insertAutocarriTest(){
-        autoDao.insertAutocarri("ford","fiesta",2,3);
-        autoDao.insertAutocarri("bmw","E280",2,26);
+    public void insertAutocarriTest() throws FileNotFoundException {
+        InputStream im = new FileInputStream ("C:\\Users\\mohsassi\\IdeaProjects\\Concessionnaire\\pic\\1.jpg");
+        Blob dhia = null;
+        autoDao.insertAutocarri(1,"ford","fiesta",2,3,dhia);
+        autoDao.insertAutocarri(1,"bmw","E280",2,26,dhia);
         assertNotNull(autoDao);
 }
 @Test

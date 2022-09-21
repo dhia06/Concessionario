@@ -69,15 +69,16 @@ public class ConcessionarioImp implements ConcessionarioDao {
     }
 
     @Override
-    public void insertConcessionario(String nome, String citta, String indirizzo) {
+    public void insertConcessionario(int iva,String nome, String citta, String indirizzo) {
         try{
             Connection connection = DriverManager.getConnection(dbURL ,username,password);
-            String SQL = "INSERT INTO concessionnaire (nome,citta,indirizzo) " + "VALUES(?,?,?)";
+            String SQL = "INSERT INTO concessionnaire (iva,nome,citta,indirizzo) " + "VALUES(?,?,?,?)";
             PreparedStatement statement = connection.prepareStatement(SQL);
-            statement.setString(1,nome);
-            statement.setString(2,citta);
-           // statement.setInt(3,Iva);
-            statement.setString(3,indirizzo);
+            statement.setInt(1,iva);
+            statement.setString(2,nome);
+            statement.setString(3,citta);
+
+            statement.setString(4,indirizzo);
            // statement.setString(4, veicolilist);
             int rows= statement.executeUpdate();
             if (rows>0 ){

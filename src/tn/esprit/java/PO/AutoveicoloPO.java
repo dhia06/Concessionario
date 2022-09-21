@@ -3,6 +3,11 @@ package tn.esprit.java.PO;
 public class AutoveicoloPO extends VeicoloPO {
     public int Nbr_door;
 
+    public AutoveicoloPO(int nbr_telaio, String marca, String modello, long iva, int nbr_door) {
+        super (nbr_telaio, marca, modello, iva);
+        Nbr_door = nbr_door;
+    }
+
     public AutoveicoloPO() {
     }
 

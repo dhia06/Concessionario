@@ -10,6 +10,8 @@ public class CsvTest {
     ConcessionnarioCSV concessionnarioCSV = new ConcessionnarioCSV();
 AutocarriCsvlamda autocarriCsvlamda = new AutocarriCsvlamda();
 AutocarriCsvlambda2 autocarriCsvlambda2 = new AutocarriCsvlambda2();
+    Autocarriimport autocarriimport = new Autocarriimport ();
+    Autoveicoliimport autoveicoliimport = new Autoveicoliimport ();
     @Test
     public void exportAutocTest(){
 
@@ -32,6 +34,14 @@ AutocarriCsvlambda2 autocarriCsvlambda2 = new AutocarriCsvlambda2();
     public void export(){
         autocarriCsvlambda2.export();
 }
+@Test
+    public void importAutoc()  {
+        autocarriimport.importcsv ();
+    }
+    @Test
+    public void importAutov() {
+        autoveicoliimport.importcsv ();
+    }
 
 }
 

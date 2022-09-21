@@ -4,9 +4,11 @@ import tn.esprit.java.test.AutocarriDaoImplTest;
 import tn.esprit.java.test.AutoveicoliDaoImplTest;
 import tn.esprit.java.test.ConcessionarioDaoImplTest;
 
+import java.io.FileNotFoundException;
+
 
 public class Client {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
     /*    AutocarriRepository autocarriRepository= new AutocarriRepository();
         System.out.println("test");
         AutocarriPO oo =new AutocarriPO(231,"dhia","5",555,5);

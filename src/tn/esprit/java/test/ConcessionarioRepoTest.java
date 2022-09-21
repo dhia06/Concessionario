@@ -5,6 +5,7 @@ import tn.esprit.java.BO.Autocarri;
 import tn.esprit.java.BO.Autoveicolo;
 import tn.esprit.java.BO.Concessionario;
 
+import tn.esprit.java.BO.Veicolo;
 import tn.esprit.java.Repository.*;
 
 import java.util.ArrayList;
@@ -55,12 +56,18 @@ public class ConcessionarioRepoTest {
     @Test
     public void insertConcessionarioTest(){
 
-        Concessionario concessionario = new Concessionario("paola","Paris","avenue Cherles Digole");
-        Autocarri autoc = new Autocarri("swift", "2020", 2019, 77);
-        Autoveicolo autov = new Autoveicolo("swift","swift",2019,4);
+        List<Veicolo> listcars = new ArrayList<> ();
+        Autocarri autoc = new Autocarri(1,"ferrari1", "f19", 1, 13);
+        Autoveicolo autov = new Autoveicolo(1,"ferrari1","serie 1",1,7);
+        listcars.add (autoc);
+        System.out.println ("lllllll"+autoc);
+        System.out.println (listcars);
+        listcars.add (autov);
+        System.out.println ("5"+listcars);
+        Concessionario concessionario = new Concessionario(1,"test","como","avenue  Dolce");
         ConRepo.insertConcessionario(concessionario);
-        autocRepo.insertAutocarri(autoc);
-        autovRepo.insertAutoveicolii(autov);
+        /* autocRepo.insertAutocarri(autoc);
+        autovRepo.insertAutoveicolii(autov);*/
         assertNotNull(ConRepo);
     }
     @Test
@@ -84,11 +91,11 @@ public class ConcessionarioRepoTest {
     public void getconcById(){
         Concessionario conn= ConRepo.getConcessionarioById(2);
 
-        assertEquals("Ale",conn.getNome());
+        assertEquals("Dhia",conn.getNome());
        // assertEquals("rome",conn.getCitta());
 
 
-        assertNotNull(conn);
+       // assertNotNull(conn);
 
 
 

@@ -1,8 +1,11 @@
 package tn.esprit.java.DAO;
+import com.mysql.cj.jdbc.Blob;
 import tn.esprit.java.Mapper.AutocarriMapper;
 import tn.esprit.java.PO.AutocarriPO;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -98,16 +101,21 @@ public class AutocarriDaoImpl implements AutocarriDao {
 
     //Insert New Autocarri
     @Override
-    public void insertAutocarri(String marca,String modello,int iva,int max_capacity) {
+    public void insertAutocarri(int nbr_telaio,String marca, String modello, int iva, int max_capacity, Blob image) {
 
         try{
+            InputStream im = new FileInputStream ("C:\\Users\\mohsassi\\IdeaProjects\\Concessionnaire\\pic\\1.jpg");
+
             Connection connection = DriverManager.getConnection(dbURL ,username,password);
-            String SQL = "INSERT INTO autocarri (Marca,Modello,Iva,Max_capacity) " + "VALUES(?,?,?,?)";
+            String SQL = "INSERT INTO autocarri (Nbr_telaio,Marca,Modello,Iva,Max_capacity,image) " + "VALUES(?,?,?,?,?,?)";
             PreparedStatement statement = connection.prepareStatement(SQL);
-            statement.setString(1,marca);
-            statement.setString(2,modello);
-            statement.setInt(3,iva);
-            statement.setInt(4,max_capacity);
+            statement.setInt (1,nbr_telaio);
+            statement.setString(2,marca);
+            statement.setString(3,modello);
+            statement.setInt(4,iva);
+            statement.setInt(5,max_capacity);
+            statement.setBlob (6,image);
+
             int rows= statement.executeUpdate();
             if (rows>0 || marca.length()<0 || modello.length()<0 || iva<0 ){
                 System.out.println(" New autocarri was inserted successfully");
@@ -120,7 +128,7 @@ public class AutocarriDaoImpl implements AutocarriDao {
     @Override
     public AutocarriPO findAutoByid(int nbr_telaio) {
 
-        AutocarriPO autocarri =new AutocarriPO()  ;
+        AutocarriPO autocarri = null;
         try{
             //establish connection
             Connection connection = DriverManager.getConnection(dbURL ,username,password);
@@ -128,7 +136,7 @@ public class AutocarriDaoImpl implements AutocarriDao {
             statement.setInt(1,nbr_telaio);
             ResultSet resultSet = statement.executeQuery();
             System.out.println("*Get Autocarri by ID*");
-            System.out.println("okèèèèèè"+nbr_telaio);
+
 
             while (resultSet.next()){
                 AutocarriMapper autocarriMapper= new AutocarriMapper();

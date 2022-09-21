@@ -43,7 +43,7 @@ public void getConcessionarNameTest(){
     public void insertConcessionarioTest(){
 
 
-        ConDao.insertConcessionario("Andrea","bologne","lambardia");
+        ConDao.insertConcessionario(1,"Andrea","bologne","lambardia");
     assertNotNull(ConDao);
     }
     @Test
