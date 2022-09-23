@@ -1,5 +1,6 @@
 package tn.esprit.java.DAO;
 
+import tn.esprit.java.BO.Veicolo;
 import tn.esprit.java.PO.ConcessionarioPO;
 import tn.esprit.java.PO.VeicoloPO;
 

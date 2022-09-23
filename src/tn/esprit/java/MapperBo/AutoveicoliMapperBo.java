@@ -16,4 +16,13 @@ public class AutoveicoliMapperBo implements IAutoveicoliMapperBo {
 
         return autoveicolo;
     }
+    @Override
+    public AutoveicoloPO mapinverse (Autoveicolo autoveicolo){
+     AutoveicoloPO autoveicoloPo = new AutoveicoloPO ();
+     autoveicoloPo.setNbr_telaio (autoveicolo.getNbr_telaio ());
+     autoveicoloPo.setIva (autoveicolo.getIva ());
+     autoveicoloPo.setMarca (autoveicolo.getMarca ());
+     autoveicoloPo.setNbr_door (autoveicolo.getNbr_door ());
+     return autoveicoloPo;
+    };
 }

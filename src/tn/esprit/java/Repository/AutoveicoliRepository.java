@@ -50,14 +50,14 @@ public class AutoveicoliRepository implements IAutoveicoliRepository {
 
     @Override
     public void insertAutoveicolii(Autoveicolo autoveicolo) {
-        this.autoveicoloDao.insertAutoveicoli(autoveicolo.getMarca(), autoveicolo.getModello(), (int) autoveicolo.getIva(), autoveicolo.getNbr_door());
+        this.autoveicoloDao.insertAutoveicoli(autoveicolo.getMarca(), autoveicolo.getModello(), autoveicolo.getIva(), autoveicolo.getNbr_door());
 
     }
 
     @Override
     public void updateAutoveicoli(Autoveicolo ppo) {
         //  AutoveicoloPO autoveicoloPO1 = new AutoveicoloPO();
-        this.autoveicoloDao.insertAutoveicoli(ppo.getMarca(), ppo.getModello(), (int) ppo.getIva(), ppo.getNbr_door());
+        this.autoveicoloDao.insertAutoveicoli(ppo.getMarca(), ppo.getModello(), ppo.getIva(), ppo.getNbr_door());
 
     }
 

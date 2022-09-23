@@ -4,9 +4,9 @@ public abstract class Veicolo {
     private int Nbr_telaio ;
     private String Marca;
     private String Modello ;
-    private long Iva;
+    private int Iva;
 
-    public Veicolo(int nbr_telaio, String marca, String modello, long iva) {
+    public Veicolo(int nbr_telaio, String marca, String modello, int iva) {
         Nbr_telaio = nbr_telaio;
         Marca = marca;
         Modello = modello;
@@ -16,7 +16,7 @@ public abstract class Veicolo {
     public Veicolo() {
     }
 
-    public Veicolo( String marca, String modello, long iva) {
+    public Veicolo( String marca, String modello, int iva) {
 
         Marca = marca;
         Modello = modello;
@@ -47,11 +47,11 @@ public abstract class Veicolo {
         Modello = modello;
     }
 
-    public long getIva() {
+    public int getIva() {
         return Iva;
     }
 
-    public void setIva(long iva) {
+    public void setIva(int iva) {
         Iva = iva;
     }
 

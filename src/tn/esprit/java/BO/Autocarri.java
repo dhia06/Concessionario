@@ -9,7 +9,7 @@ public class Autocarri  extends Veicolo{
     public Autocarri() {
     }
 
-    public Autocarri(int nbr_telaio, String marca, String modello, long iva, int max_capacity) {
+    public Autocarri(int nbr_telaio, String marca, String modello, int iva, int max_capacity) {
         super (nbr_telaio, marca, modello, iva);
         Max_capacity = max_capacity;
     }
@@ -20,7 +20,7 @@ public class Autocarri  extends Veicolo{
         Max_capacity = max_capacity;
     }
 
-    public Autocarri( String marca, String modello, long iva, int max_capacity) {
+    public Autocarri( String marca, String modello, int iva, int max_capacity) {
         super( marca, modello, iva);
         Max_capacity = max_capacity;
     }
@@ -29,7 +29,7 @@ public class Autocarri  extends Veicolo{
         return Max_capacity;
     }
 
-    public Autocarri(int nbr_telaio, String marca, String modello, long iva, int max_capacity, Blob image) {
+    public Autocarri(int nbr_telaio, String marca, String modello, int iva, int max_capacity, Blob image) {
         super (nbr_telaio, marca, modello, iva);
         Max_capacity = max_capacity;
         this.image = image;

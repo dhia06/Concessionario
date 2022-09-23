@@ -4,19 +4,19 @@ public abstract class VeicoloPO {
     private int Nbr_telaio ;
     public String Marca;
     public String Modello ;
-    public long Iva;
+    public int Iva;
 
     public VeicoloPO() {
     }
 
-    public VeicoloPO(int nbr_telaio, String marca, String modello, long iva) {
+    public VeicoloPO(int nbr_telaio, String marca, String modello, int iva) {
         Nbr_telaio = nbr_telaio;
         Marca = marca;
         Modello = modello;
         Iva = iva;
     }
 
-    public VeicoloPO(String marca, String modello, long iva) {
+    public VeicoloPO(String marca, String modello, int iva) {
 
         Marca = marca;
         Modello = modello;
@@ -47,11 +47,11 @@ public abstract class VeicoloPO {
         Modello = modello;
     }
 
-    public long getIva() {
+    public int getIva() {
         return Iva;
     }
 
-    public void setIva(long iva) {
+    public void setIva(int iva) {
         Iva = iva;
     }
 

@@ -12,6 +12,7 @@ import tn.esprit.java.PO.AutocarriPO;
 import tn.esprit.java.PO.AutoveicoloPO;
 import tn.esprit.java.PO.ConcessionarioPO;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,9 +21,9 @@ public class ConcessionnarioRepository implements IConcessionnarioRepository {
     private ConcessionarioDao concessionarioDao;
     private AutoveicoloDao autoveicoloDao;
     private AutocarriDao autocarriDao;
-    public AutocarriRepository autocarriRepository;
-    private AutocarriRepository autocRepo = new AutocarriRepository ();
-    private AutoveicoliRepository autovRepo = new AutoveicoliRepository ();
+
+
+    int ivaa;
 
     public ConcessionnarioRepository( ) {
         this.concessionarioDao = new ConcessionarioImp ();
@@ -74,20 +75,32 @@ public class ConcessionnarioRepository implements IConcessionnarioRepository {
         }
         return list1;
     }
+//methode reserve pour le CSV file
+    @Override
+    public void insertConc(Concessionario conc) {
+        concessionarioDao.insertConcessionario (conc.getIva (), conc.getNome (), conc.getCitta (), conc.getIndirizzo ());
 
+        System.out.println("okeyy");
+    }
     @Override
     public void insertConcessionario(Concessionario concessionario) {
-        Autocarri autocarri = new Autocarri ();
-        Autoveicolo autoveicolo = new Autoveicolo ();
-        List<Veicolo> listv = new ArrayList<> ();
-        listv.add (autocarri);
-        listv.add (autoveicolo);
-        concessionario.setListcars (listv);
-        System.out.println ("Listof cars" + listv);
-        this.autocRepo.insertAutocarri (autocarri);
-        this.autovRepo.insertAutoveicolii (autoveicolo);
-        this.concessionarioDao.insertConcessionario (concessionario.getIva (),concessionario.getNome (), concessionario.getCitta (), concessionario.getIndirizzo ());
-    }
+
+
+            System.out.println ("IF");
+            this.concessionarioDao.insertConcessionario (concessionario.getIva (), concessionario.getNome (), concessionario.getCitta (), concessionario.getIndirizzo ());
+            List<Veicolo> listVeicoli = concessionario.getListcars ();
+            for (Veicolo veicolo : listVeicoli) {
+                if (veicolo instanceof Autoveicolo) {
+                    Autoveicolo v = (Autoveicolo) veicolo;
+                    autoveicoloDao.insertAutoveicoli (v.getMarca (), v.getModello (), v.getIva (), v.getNbr_door ());
+                } else if (veicolo instanceof Autocarri) {
+                    Autocarri c = (Autocarri) veicolo;
+                    autocarriDao.insertAutocarri (c.getNbr_telaio (), c.getMarca (), c.getModello (), c.getIva (), c.getMax_capacity (), c.getImage ());
+                    System.out.println ("inserted" + concessionario + c);
+                }
+
+        }
+    };
 
     @Override
     public void UpdateConcessionario(Concessionario poc) {
@@ -101,10 +114,9 @@ public class ConcessionnarioRepository implements IConcessionnarioRepository {
 
     }
 
-
     @Override
     public Concessionario getConcessionarioById(int iva) {
-        Concessionario concessionario = null;
+        Concessionario concessionario = new Concessionario ();
         List<Veicolo> listveic = new ArrayList<> ();
         List<AutocarriPO> listAutocarriPo = new ArrayList<> ();
         List<AutoveicoloPO> listAutoveicoliPo = new ArrayList<> ();

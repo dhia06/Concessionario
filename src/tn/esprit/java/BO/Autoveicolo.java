@@ -6,7 +6,7 @@ public class Autoveicolo extends Veicolo{
     public Autoveicolo() {
     }
 
-    public Autoveicolo(int nbr_telaio, String marca, String modello, long iva, int nbr_door) {
+    public Autoveicolo(int nbr_telaio, String marca, String modello, int iva, int nbr_door) {
         super(nbr_telaio, marca, modello, iva);
         Nbr_door = nbr_door;
     }
@@ -17,7 +17,7 @@ public class Autoveicolo extends Veicolo{
 
 
 
-    public Autoveicolo(String marca, String modello, long iva, int nbr_door) {
+    public Autoveicolo(String marca, String modello, int iva, int nbr_door) {
         super( marca, modello, iva);
         Nbr_door = nbr_door;
     }

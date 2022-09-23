@@ -4,12 +4,11 @@ import tn.esprit.java.BO.Autoveicolo;
 import tn.esprit.java.BO.Concessionario;
 import tn.esprit.java.Repository.ConcessionnarioRepository;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 
 public class ConcessionnarioCSV {
+    ConcessionnarioRepository concessionnarioRepository = new ConcessionnarioRepository ();
 
     public void export( ) {
         // 1. use a ropository to retrieve data
@@ -43,6 +42,40 @@ public class ConcessionnarioCSV {
         }
 
 
+    }
+    public  boolean importcsv( String pathurl) {
+        String line = "";
+        String splitBy = ",";
+
+        boolean imported = false;
+        try {
+            //   1/  parsing a CSV file into BufferedReader class
+            BufferedReader br = new BufferedReader(new FileReader (pathurl));
+
+            // 2/ logic of reading and send data to DB
+            while ((line = br.readLine()) != null)
+            {
+                //returns a Boolean value
+                imported = true;
+                //use comma as separator
+                String[] concessionario = line.split(splitBy);
+                //retrive every cells from the csv file and use it as parameters for insertConcessionario method
+                Concessionario conc = new Concessionario ();
+
+                conc.setIva (Integer.parseInt (concessionario[0]));
+                conc.setNome (concessionario[1]);
+                conc.setCitta (concessionario[2]);
+                conc.setIndirizzo ( (concessionario[3]));
+               // conc.setListcars ( (concessionario[4]));
+                System.out.println ("autov"+conc);
+                concessionnarioRepository.insertConc (conc);
+            }
+        }
+        catch(IOException e) {
+            e.printStackTrace();
+        }
+        // 3/ return of boolean
+        return imported;
     }
 
 }

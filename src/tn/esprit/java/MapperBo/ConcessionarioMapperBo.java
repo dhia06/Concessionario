@@ -13,9 +13,15 @@ public class ConcessionarioMapperBo implements IConcessionarioMapperBo {
             concessionario.setNome(concessionarioPO.getNome());
             concessionario.setIva(concessionarioPO.getIva());
             concessionario.setIndirizzo(concessionarioPO.getIndirizzo());
-           // concessionario.setVeicolilist(concessionarioPO.getVeicolilist());
-      //  concessionario.setListcars(concessionarioPO.);
-
             return concessionario;
     }
+    @Override
+    public ConcessionarioPO mapinverse (Concessionario concessionario){
+        ConcessionarioPO concessionarioPO = new ConcessionarioPO ();
+        concessionarioPO.setIva (concessionario.getIva ());
+        concessionarioPO.setNome (concessionario.getNome ());
+        concessionarioPO.setCitta (concessionario.getCitta ());
+        concessionarioPO.setIndirizzo (concessionario.getIndirizzo ());
+        return concessionarioPO;
+    };
 }

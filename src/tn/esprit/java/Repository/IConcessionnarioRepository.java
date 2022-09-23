@@ -10,6 +10,8 @@ public interface IConcessionnarioRepository {
     public List<Concessionario> getConcessionario();
     public List<Concessionario> getConcessionario(String nome);
     public  void insertConcessionario(Concessionario concessionario);
+
+    public void insertConc(Concessionario conc);
     public void UpdateConcessionario(Concessionario poc);
     public void DeleteConcessionario(String nome);
     public Concessionario getConcessionarioById(int iva);

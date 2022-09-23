@@ -10,12 +10,12 @@ public Blob image;
     public AutocarriPO() {
     }
 
-    public AutocarriPO(int nbr_telaio, String marca, String modello, long iva, int max_capacity) {
+    public AutocarriPO(int nbr_telaio, String marca, String modello, int iva, int max_capacity) {
         super (nbr_telaio, marca, modello, iva);
         Max_capacity = max_capacity;
     }
 
-    public AutocarriPO(String marca, String modello, long iva, int max_capacity, Blob image) {
+    public AutocarriPO(String marca, String modello, int iva, int max_capacity, Blob image) {
         super (marca, modello, iva);
         Max_capacity = max_capacity;
         this.image = image;
@@ -26,7 +26,7 @@ public Blob image;
         Max_capacity = max_capacity;
     }
 
-    public AutocarriPO( String marca, String modello, long iva, int max_capacity) {
+    public AutocarriPO( String marca, String modello, int iva, int max_capacity) {
         super( marca, modello, iva);
         Max_capacity = max_capacity;
     }

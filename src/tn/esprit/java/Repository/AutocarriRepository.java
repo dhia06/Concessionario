@@ -1,4 +1,8 @@
 package tn.esprit.java.Repository;
+
+
+import org.apache.log4j.Logger;
+import org.apache.log4j.spi.LoggerFactory;
 import tn.esprit.java.BO.Autocarri;
 import tn.esprit.java.DAO.AutocarriDao;
 import tn.esprit.java.DAO.AutocarriDaoImpl;
@@ -7,14 +11,19 @@ import tn.esprit.java.PO.AutocarriPO;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class AutocarriRepository implements IAutocarriRepository {
      private AutocarriDao autocarriDao;
+   // Logger logger = LoggerFactory.getLogger(AutocarriRepository.class);
+    final static Logger logger = Logger.getLogger(AutocarriRepository.class);
+
      public AutocarriRepository() {
          this.autocarriDao = new AutocarriDaoImpl();
      }
 
     @Override
     public List<Autocarri> getAutocarri() {
+
          List<Autocarri> lista = new ArrayList<>();
          // 1. use a DAO to retrieve data
         List<AutocarriPO> listAutocarriPO = this.autocarriDao.getAutocarri();
@@ -69,7 +78,7 @@ public class AutocarriRepository implements IAutocarriRepository {
 
     @Override
     public void insertAutocarri(Autocarri autocarri) {
-         autocarriDao.insertAutocarri(autocarri.getNbr_telaio (),autocarri.getMarca(), autocarri.getModello(), (int) autocarri.getIva(), autocarri.getMax_capacity(),autocarri.getImage ());
+         autocarriDao.insertAutocarri(autocarri.getNbr_telaio (),autocarri.getMarca(), autocarri.getModello(), autocarri.getIva(), autocarri.getMax_capacity(),autocarri.getImage ());
 
          System.out.println("okeyy");
      }
@@ -78,7 +87,7 @@ public class AutocarriRepository implements IAutocarriRepository {
     public void updateAutocarri(Autocarri po ) {
       //   AutocarriPO autocarriPO = new AutocarriPO();
 
-     this.autocarriDao.updateAutocarri(po.getMarca(), po.getModello(), (int) po.getIva(), po.getMax_capacity());
+     this.autocarriDao.updateAutocarri(po.getMarca(), po.getModello(),  po.getIva(), po.getMax_capacity());
 
 
 

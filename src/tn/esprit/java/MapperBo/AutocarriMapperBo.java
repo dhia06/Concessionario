@@ -18,4 +18,14 @@ public class AutocarriMapperBo  implements IAutocarriMapperBo {
 
         return  auto1;
     }
+
+    @Override
+    public AutocarriPO mappinverse(Autocarri autocarri) {
+        AutocarriPO auto = new AutocarriPO ();
+        auto.setNbr_telaio (autocarri.getNbr_telaio ());
+        auto.setMarca (autocarri.getMarca ());
+        auto.setModello (autocarri.getModello ());
+        auto.setMax_capacity (autocarri.getMax_capacity ());
+        return auto;
+    }
 }

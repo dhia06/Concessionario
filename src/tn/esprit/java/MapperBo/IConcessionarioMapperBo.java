@@ -5,4 +5,5 @@ import tn.esprit.java.PO.ConcessionarioPO;
 
 public interface IConcessionarioMapperBo {
     public Concessionario mapp(ConcessionarioPO concessionarioPO);
+    public ConcessionarioPO mapinverse(Concessionario concessionario);
 }

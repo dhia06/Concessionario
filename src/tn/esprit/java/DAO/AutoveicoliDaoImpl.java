@@ -186,7 +186,7 @@ public class AutoveicoliDaoImpl  implements AutoveicoloDao {
             try {
                 Connection connection = DriverManager.getConnection(dbURL, username, password);
                 PreparedStatement preparedStatement = connection.prepareStatement("select * from autoveicolo where iva=?");
-                preparedStatement.setLong(1,iva);
+                preparedStatement.setInt (1,iva);
                 ResultSet resultSet = preparedStatement.executeQuery();
                 AutoveicoliMapper autoveicoliMapper = new AutoveicoliMapper();
                 while (resultSet.next() ){
