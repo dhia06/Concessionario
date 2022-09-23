@@ -56,7 +56,6 @@ public class AutoveicoliRepository implements IAutoveicoliRepository {
 
     @Override
     public void updateAutoveicoli(Autoveicolo ppo) {
-        //  AutoveicoloPO autoveicoloPO1 = new AutoveicoloPO();
         this.autoveicoloDao.insertAutoveicoli(ppo.getMarca(), ppo.getModello(), ppo.getIva(), ppo.getNbr_door());
 
     }

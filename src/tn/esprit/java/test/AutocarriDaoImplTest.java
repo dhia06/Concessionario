@@ -1,11 +1,14 @@
 package tn.esprit.java.test;
 
 import com.mysql.cj.jdbc.Blob;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import tn.esprit.java.DAO.AutocarriDao;
 import tn.esprit.java.DAO.AutocarriDaoImpl;
 import tn.esprit.java.PO.AutocarriPO;
+import tn.esprit.java.Repository.AutocarriRepository;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -17,16 +20,15 @@ import static org.junit.Assert.*;
 
 
 public class AutocarriDaoImplTest {
+    Logger logger = Logger.getLogger(AutocarriRepository.class);
    AutocarriDao autoDao = new AutocarriDaoImpl();
     List<AutocarriPO> autocarri = new ArrayList<>();
 @Test
     public void testRetrieveAllUsers() {
 
+
         int i=0;
         for (AutocarriPO autocarr : autoDao.getAutocarri()) {
-           /* System.out.println("Autocarri "+i+": [ Marca : " + autocarr.getMarca() +
-                    " , Modello : "+ autocarr.getModello()+ " , IVA :" +autocarr.getIva()+" , Capacity :"+ autocarr.getMax_capacity()+ " ]");
-            i++;*/
             autocarri.add(autocarr);
             System.out.println(autocarr);
         }
@@ -37,13 +39,11 @@ public class AutocarriDaoImplTest {
     }
     @Test
     public void testgetbyID() {
-        System.out.println("--------");
+        BasicConfigurator.configure();
         int k=0;
         AutocarriPO autocarr= autoDao.findAutoByid(88);
-
-            System.out.println("Autocarri with this ID "+k+": [ Marca : " + autocarr.getMarca() +
-                    " , Modello : "+ autocarr.getModello()+ " Telaio_nbr : "+autocarr.getNbr_telaio()+ " , IVA :" +autocarr.getIva()+" , Capacity :"+ autocarr.getMax_capacity()+ " ]");
-
+        logger.info ("Autocarri with this ID "+k+": [ Marca : " + autocarr.getMarca() +
+              " , Modello : "+ autocarr.getModello()+ " Telaio_nbr : "+autocarr.getNbr_telaio()+ " , IVA :" +autocarr.getIva()+" , Capacity :"+ autocarr.getMax_capacity()+ " ]");
 
             assertNotNull(autocarr);
             assertEquals("smartcar", autocarr.getMarca());
@@ -84,7 +84,7 @@ public class AutocarriDaoImplTest {
 }
 @Test
 public void updateAutocarriTest(){
-    autoDao.updateAutocarri("alpha Romeo","400cc",20,20);
+    autoDao.updateAutocarri("marca","400cc",1,2);
     assertNotNull(autoDao);
 }
 @Test

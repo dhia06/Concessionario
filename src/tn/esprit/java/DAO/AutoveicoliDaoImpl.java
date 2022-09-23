@@ -1,15 +1,14 @@
 package tn.esprit.java.DAO;
-import tn.esprit.java.Mapper.AutocarriMapper;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 import tn.esprit.java.Mapper.AutoveicoliMapper;
-import tn.esprit.java.MapperBo.AutoveicoliMapperBo;
-import tn.esprit.java.PO.AutocarriPO;
 import tn.esprit.java.PO.AutoveicoloPO;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AutoveicoliDaoImpl  implements AutoveicoloDao {
+    static Logger logger = Logger.getLogger(AutoveicoliDaoImpl.class.getName ());
     public final String dbURL = "jdbc:mysql://localhost:3306/concessionnaire";
     public final String username = "root";
     public final String password = "rootroot";
@@ -18,16 +17,16 @@ public class AutoveicoliDaoImpl  implements AutoveicoloDao {
 
     @Override
     public List<AutoveicoloPO> getAutoveicolo() {
+        BasicConfigurator.configure();
         List<AutoveicoloPO> autoveicolo =new ArrayList<>()  ;
-
         try{
             //establish connection
             Connection connection = DriverManager.getConnection(dbURL ,username,password);
             if(connection != null) {
-                System.out.println("Connection  established");
+                logger.info ("Connection  established");
             }
             else {
-                System.out.println("Connection not established");
+                logger.error ("Connection not established");
             }
             Statement statement = connection.createStatement();
             ResultSet resultSet= statement.executeQuery("select * from autoveicolo ");
@@ -46,6 +45,7 @@ public class AutoveicoliDaoImpl  implements AutoveicoloDao {
 
     @Override
     public AutoveicoloPO getAutoByID( int nbr_telaio) {
+        BasicConfigurator.configure();
         AutoveicoloPO autoveicolo =new AutoveicoloPO()  ;
         try{
             //establish connection
@@ -53,8 +53,6 @@ public class AutoveicoliDaoImpl  implements AutoveicoloDao {
             PreparedStatement statement = connection.prepareStatement("select * from autoveicolo where Nbr_telaio=?");
             statement.setInt(1,nbr_telaio);
             ResultSet resultSet = statement.executeQuery();
-            System.out.println("*Get Autoveicoli by ID*");
-
             while (resultSet.next()){
                 AutoveicoliMapper autoveicoliMapper= new AutoveicoliMapper();
                 autoveicolo=autoveicoliMapper.map(resultSet);
@@ -77,8 +75,6 @@ public class AutoveicoliDaoImpl  implements AutoveicoloDao {
             PreparedStatement preparedStatement = connection.prepareStatement(sqll);
             preparedStatement.setString(1,marca);
             ResultSet resultSet = preparedStatement.executeQuery();
-            System.out.println("*Get Autoveiocoli by Marca*");
-
             while (resultSet.next()){
                 AutoveicoliMapper auto = new AutoveicoliMapper();
                 aut.add(auto.map(resultSet));
@@ -93,6 +89,7 @@ public class AutoveicoliDaoImpl  implements AutoveicoloDao {
 
     @Override
     public void insertAutoveicoli(String marca, String modello, int iva, int nbr_door) {
+        BasicConfigurator.configure();
         try{
             Connection connection = DriverManager.getConnection(dbURL ,username,password);
             String SQL = "INSERT INTO autoveicolo (Marca,Modello,Iva,Nbr_door) " + "VALUES(?,?,?,?)";
@@ -103,7 +100,7 @@ public class AutoveicoliDaoImpl  implements AutoveicoloDao {
             statement.setInt(4,nbr_door);
             int rows= statement.executeUpdate();
             if (rows>0 ){
-                System.out.println(" New autoveicolo was inserted successfully");
+                logger.info ("New autoveicolo was inserted successfully");
             }
 
         }catch (Exception e){
@@ -114,15 +111,16 @@ public class AutoveicoliDaoImpl  implements AutoveicoloDao {
 
     @Override
     public void updateAutoveicoli(String marca, String modello, int iva, int nbr_door) {
+        BasicConfigurator.configure();
         String sql="UPDATE autoveicolo SET  Modello =?,Iva =?,Nbr_door=? WHERE Marca=?";
         try{
             //establish connection
             Connection connection = DriverManager.getConnection(dbURL ,username,password);
             if(connection != null) {
-                System.out.println("Connection  established");
+                logger.info ("Connection  established");
             }
             else {
-                System.out.println("Connection not established");
+                logger.error ("Connection not established");
             }
             Statement statement = connection.createStatement();
             PreparedStatement statement1= connection.prepareStatement(sql);
@@ -131,38 +129,30 @@ public class AutoveicoliDaoImpl  implements AutoveicoloDao {
             statement1.setInt(3,nbr_door);
             statement1.setString(4,marca);
             int rows =statement1.executeUpdate();
+            logger.info ("Autoveicolo:Marca"+marca+" is updated in the database");
             connection.close();
 
         }catch (Exception e){
             e.printStackTrace();
         }
-
-
-        System.out.println("Autoveicolo:Marca is updated in the database");
-
-
-
-
-
-
-
     }
 
     @Override
     public void deleteAutoveicoli(String marca) {
+        BasicConfigurator.configure();
         try{
             //establish connection
             Connection connection = DriverManager.getConnection(dbURL ,username,password);
             String sql="DELETE FROM autoveicolo WHERE Marca=?";
             if(connection != null) {
-                System.out.println("Connection  established");
+
+               logger.info ("Connection  established");
             }
             else {
-                System.out.println("Connection not established");
+             logger.error ("Connection not established");
             }
             PreparedStatement statement1= connection.prepareStatement(sql);
             statement1.setString(1, marca);
-
             int rows =statement1.executeUpdate();
             connection.close();
 
@@ -179,7 +169,7 @@ public class AutoveicoliDaoImpl  implements AutoveicoloDao {
 
     @Override
     public List<AutoveicoloPO> findbyIva(int iva) {
-
+        BasicConfigurator.configure();
             //1 defenir le resulat
             List<AutoveicoloPO> autoveicoloPOS = new ArrayList<>();
             //2 implementer la methodes et logic metier
@@ -190,16 +180,12 @@ public class AutoveicoliDaoImpl  implements AutoveicoloDao {
                 ResultSet resultSet = preparedStatement.executeQuery();
                 AutoveicoliMapper autoveicoliMapper = new AutoveicoliMapper();
                 while (resultSet.next() ){
-
-                   autoveicoloPOS.add(autoveicoliMapper.map(resultSet));
-
-
+                    autoveicoloPOS.add(autoveicoliMapper.map(resultSet));
                 }
                 connection.close();
             }catch (Exception e){
                 e.printStackTrace();
             }
-            System.out.println(autoveicoloPOS);
             ///3 retour
             return autoveicoloPOS;
 

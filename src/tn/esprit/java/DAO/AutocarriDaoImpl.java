@@ -1,19 +1,20 @@
 package tn.esprit.java.DAO;
 import com.mysql.cj.jdbc.Blob;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 import tn.esprit.java.Mapper.AutocarriMapper;
 import tn.esprit.java.PO.AutocarriPO;
-
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 public class AutocarriDaoImpl implements AutocarriDao {
-
-   public final String dbURL = "jdbc:mysql://localhost:3306/concessionnaire";
-   public final String username = "root";
+    static Logger logger = Logger.getLogger(AutocarriDaoImpl.class.getName ());
+    public final String dbURL = "jdbc:mysql://localhost:3306/concessionnaire";
+    public final String username = "root";
     public final String password = "rootroot";
+
     public AutocarriDaoImpl(){}
 
 
@@ -21,15 +22,16 @@ public class AutocarriDaoImpl implements AutocarriDao {
 @Override
     public List<AutocarriPO> getAutocarri() {
         List<AutocarriPO> autocarri = new ArrayList<>();
-
+        BasicConfigurator.configure();
     try{
         //establish connection
         Connection connection = DriverManager.getConnection(dbURL ,username,password);
         if(connection != null) {
-            System.out.println("Connection  established");
+            logger.info ("Connection  established");
+
         }
         else {
-            System.out.println("Connection not established");
+            logger.error ("Connection not established");
         }
         Statement statement = connection.createStatement();
         ResultSet resultSet= statement.executeQuery("select * from autocarri ");
@@ -50,20 +52,16 @@ public class AutocarriDaoImpl implements AutocarriDao {
     @Override
     public List<AutocarriPO> finfByMArca(String marca) {
         List<AutocarriPO> autocarri =new ArrayList<>()  ;
+        BasicConfigurator.configure();
         try{
             //establish connection
             Connection connection = DriverManager.getConnection(dbURL ,username,password);
             PreparedStatement statement = connection.prepareStatement("select * from autocarri where Marca=?");
             statement.setString(1,marca);
             ResultSet resultSet = statement.executeQuery();
-
-            System.out.println("*Get Autocarri by Marca*");
-
             while (resultSet.next() ){
                 AutocarriMapper autocarriMapper= new AutocarriMapper();
                 autocarri.add(autocarriMapper.map(resultSet));
-
-
             }
             connection.close();
 
@@ -76,6 +74,7 @@ public class AutocarriDaoImpl implements AutocarriDao {
 
     @Override
     public List<AutocarriPO> findByIva(int iva) {
+        BasicConfigurator.configure();
         //1 defenir le resulat
         List<AutocarriPO> list = new ArrayList<>();
         //2 implementer la methodes et logic metier
@@ -87,8 +86,6 @@ public class AutocarriDaoImpl implements AutocarriDao {
             while (resultSet.next() ){
                 AutocarriMapper autocarriMapper= new AutocarriMapper();
                 list.add(autocarriMapper.map(resultSet));
-
-
             }
             connection.close();
         }catch (Exception e){
@@ -102,7 +99,7 @@ public class AutocarriDaoImpl implements AutocarriDao {
     //Insert New Autocarri
     @Override
     public void insertAutocarri(int nbr_telaio,String marca, String modello, int iva, int max_capacity, Blob image) {
-
+        BasicConfigurator.configure();
         try{
             InputStream im = new FileInputStream ("C:\\Users\\mohsassi\\IdeaProjects\\Concessionnaire\\pic\\1.jpg");
 
@@ -118,7 +115,7 @@ public class AutocarriDaoImpl implements AutocarriDao {
 
             int rows= statement.executeUpdate();
             if (rows>0 || marca.length()<0 || modello.length()<0 || iva<0 ){
-                System.out.println(" New autocarri was inserted successfully");
+                logger.info ("New autocarri was inserted successfully");
             }
 
         }catch (Exception e){
@@ -127,6 +124,7 @@ public class AutocarriDaoImpl implements AutocarriDao {
     }
     @Override
     public AutocarriPO findAutoByid(int nbr_telaio) {
+        BasicConfigurator.configure();
 
         AutocarriPO autocarri = null;
         try{
@@ -135,9 +133,6 @@ public class AutocarriDaoImpl implements AutocarriDao {
             PreparedStatement statement = connection.prepareStatement("select * from autocarri where Nbr_telaio=?");
             statement.setInt(1,nbr_telaio);
             ResultSet resultSet = statement.executeQuery();
-            System.out.println("*Get Autocarri by ID*");
-
-
             while (resultSet.next()){
                 AutocarriMapper autocarriMapper= new AutocarriMapper();
                 autocarri = autocarriMapper.map(resultSet);
@@ -153,16 +148,18 @@ public class AutocarriDaoImpl implements AutocarriDao {
     //UPDATE AUTOCARRI
     @Override
     public void updateAutocarri(String marca,String modello,int iva ,int max_capacity) {
+        BasicConfigurator.configure();
 
         String sql="UPDATE autocarri SET  Modello =?,Iva =?,Max_capacity=? WHERE Marca=?";
         try{
             //establish connection
             Connection connection = DriverManager.getConnection(dbURL ,username,password);
             if(connection != null) {
-                System.out.println("Connection  established");
+                logger.info ("Connection  established");
+
             }
             else {
-                System.out.println("Connection not established");
+                logger.error ("Connection not established");
             }
             Statement statement = connection.createStatement();
             PreparedStatement statement1= connection.prepareStatement(sql);
@@ -183,15 +180,16 @@ public class AutocarriDaoImpl implements AutocarriDao {
     //DELETE AUTOCAR
     @Override
     public void deleteAutocarri(String marca) {
+        BasicConfigurator.configure();
         try{
             //establish connection
             Connection connection = DriverManager.getConnection(dbURL ,username,password);
             String sql="DELETE FROM autocarri WHERE Marca=?";
             if(connection != null) {
-                System.out.println("Connection  established");
+                logger.info ("Connection established");
             }
             else {
-                System.out.println("Connection not established");
+                logger.error ("Connection not established");
             }
             PreparedStatement statement1= connection.prepareStatement(sql);
             statement1.setString(1, marca);
@@ -202,11 +200,8 @@ public class AutocarriDaoImpl implements AutocarriDao {
         }catch (Exception e){
             e.printStackTrace();
         }
+        logger.info ("Autocarri is deleted fron DB");
 
-
-
-
-        System.out.println("Autocarri is deleted fron DB");
 
     }
 

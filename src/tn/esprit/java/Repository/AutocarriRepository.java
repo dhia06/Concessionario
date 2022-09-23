@@ -13,8 +13,8 @@ import java.util.List;
 
 
 public class AutocarriRepository implements IAutocarriRepository {
+
      private AutocarriDao autocarriDao;
-   // Logger logger = LoggerFactory.getLogger(AutocarriRepository.class);
     final static Logger logger = Logger.getLogger(AutocarriRepository.class);
 
      public AutocarriRepository() {
@@ -80,12 +80,11 @@ public class AutocarriRepository implements IAutocarriRepository {
     public void insertAutocarri(Autocarri autocarri) {
          autocarriDao.insertAutocarri(autocarri.getNbr_telaio (),autocarri.getMarca(), autocarri.getModello(), autocarri.getIva(), autocarri.getMax_capacity(),autocarri.getImage ());
 
-         System.out.println("okeyy");
      }
 
     @Override
     public void updateAutocarri(Autocarri po ) {
-      //   AutocarriPO autocarriPO = new AutocarriPO();
+
 
      this.autocarriDao.updateAutocarri(po.getMarca(), po.getModello(),  po.getIva(), po.getMax_capacity());
 

@@ -1,5 +1,6 @@
 package tn.esprit.java.test;
 import log4j.Testlog;
+import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import tn.esprit.java.BO.Autocarri;
@@ -20,6 +21,7 @@ import static org.junit.Assert.assertNotNull;
 public class ImportExport {
     static Logger logger = Logger.getLogger(ImportExport.class.getName ());
 
+
     ConcessionnarioCSV concessionnarioCSV = new ConcessionnarioCSV ();
     AutocarriCsvlamda autocarriCsvlamda = new AutocarriCsvlamda ();
     AutocarriCsvlambda2 autocarriCsvlambda2 = new AutocarriCsvlambda2 ();
@@ -39,11 +41,12 @@ public class ImportExport {
     }
     @Test
     public void insertConcessionarioTest(){
+        BasicConfigurator.configure();
         Concessionario newConc = new Concessionario ();
         newConc = this.concessionnarioRepository.getConcessionarioById (1);
         System.out.println ("resultfindone"+newConc);
         if (newConc.getIva () == 0){
-            logger.info ("Inserting New Concessionario in pregress");
+            logger.info ("Inserting New Concessionario in progress");
             List<Veicolo> listcars = new ArrayList<> ();
             Autocarri autoc = new Autocarri (1,"marca","modello",1,4);
             Autoveicolo autov = new Autoveicolo(1,"ferrari1","serie 1",1,7);
@@ -52,11 +55,11 @@ public class ImportExport {
             Concessionario concessionario = new Concessionario(1,"dhia","como","avenue  Dolce",listcars);
             ConRepo.insertConcessionario(concessionario);}
             else{
-            logger.info ("Concessionario Already Exist,Inserting Veicoli");
+            logger.warn ("Concessionario Already Exist,Inserting Veicoli");
             AutocarriRepository autocarriRepository = new AutocarriRepository ();
             AutoveicoliRepository autoveicoliRepository = new AutoveicoliRepository ();
-            Autocarri autoc = new Autocarri (2,"marca2","modello",1,4);
-            Autoveicolo autov = new Autoveicolo(2,"ferrari2","serie 1",1,7);
+            Autocarri autoc = new Autocarri (3,"marca2","modello",1,4);
+            Autoveicolo autov = new Autoveicolo(3,"ferrari2","serie 1",1,7);
             autocarriRepository.insertAutocarri (autoc);
             autoveicoliRepository.insertAutoveicolii (autov);
 

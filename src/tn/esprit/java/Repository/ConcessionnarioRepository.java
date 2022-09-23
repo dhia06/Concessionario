@@ -23,7 +23,6 @@ public class ConcessionnarioRepository implements IConcessionnarioRepository {
     private AutocarriDao autocarriDao;
 
 
-    int ivaa;
 
     public ConcessionnarioRepository( ) {
         this.concessionarioDao = new ConcessionarioImp ();
@@ -61,7 +60,6 @@ public class ConcessionnarioRepository implements IConcessionnarioRepository {
             concessionario.setListcars (listAutov);
             listConcessionario.add (concessionario);
         }
-        System.out.println (listConcessionario);
         return listConcessionario;
     }
 
@@ -78,9 +76,8 @@ public class ConcessionnarioRepository implements IConcessionnarioRepository {
 //methode reserve pour le CSV file
     @Override
     public void insertConc(Concessionario conc) {
-        concessionarioDao.insertConcessionario (conc.getIva (), conc.getNome (), conc.getCitta (), conc.getIndirizzo ());
+     concessionarioDao.insertConcessionario (conc.getIva (), conc.getNome (), conc.getCitta (), conc.getIndirizzo ());
 
-        System.out.println("okeyy");
     }
     @Override
     public void insertConcessionario(Concessionario concessionario) {
