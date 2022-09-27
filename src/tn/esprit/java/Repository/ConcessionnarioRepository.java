@@ -1,10 +1,12 @@
 package tn.esprit.java.Repository;
 
+import org.apache.log4j.BasicConfigurator;
 import tn.esprit.java.BO.Autocarri;
 import tn.esprit.java.BO.Autoveicolo;
 import tn.esprit.java.BO.Concessionario;
 import tn.esprit.java.BO.Veicolo;
 import tn.esprit.java.DAO.*;
+import tn.esprit.java.Mapper.ConcessionarioMapper;
 import tn.esprit.java.MapperBo.AutocarriMapperBo;
 import tn.esprit.java.MapperBo.AutoveicoliMapperBo;
 import tn.esprit.java.MapperBo.ConcessionarioMapperBo;
@@ -15,6 +17,9 @@ import tn.esprit.java.PO.ConcessionarioPO;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.Assert.assertNotNull;
+import static tn.esprit.java.Repository.AutocarriRepository.logger;
 
 
 public class ConcessionnarioRepository implements IConcessionnarioRepository {
@@ -79,23 +84,49 @@ public class ConcessionnarioRepository implements IConcessionnarioRepository {
      concessionarioDao.insertConcessionario (conc.getIva (), conc.getNome (), conc.getCitta (), conc.getIndirizzo ());
 
     }
+
     @Override
     public void insertConcessionario(Concessionario concessionario) {
-
-
-            System.out.println ("IF");
+        BasicConfigurator.configure();
+        //call the mapper BO --> PO
+        ConcessionarioMapperBo concessionarioMapperBo = new ConcessionarioMapperBo ();
+        AutoveicoliMapperBo autoveicoliMapperBo = new AutoveicoliMapperBo ();
+        AutocarriMapperBo autocarriMapperBo = new AutocarriMapperBo ();
+        //Verify if this Concessionario exist or not!!!
+        ConcessionarioPO concessionarioPO = concessionarioDao.getConcessionarioById (concessionarioMapperBo.mapinverse(concessionario).getIva ());;
+        if (concessionarioPO.getIva () == 0){   //the concessionario dont exist in the Db
+            logger.info ("the concessionario dont exist in the Db");
             this.concessionarioDao.insertConcessionario (concessionario.getIva (), concessionario.getNome (), concessionario.getCitta (), concessionario.getIndirizzo ());
-            List<Veicolo> listVeicoli = concessionario.getListcars ();
+            logger.info ("the concessionario is inserted in the Db");
+            List<Veicolo> listVeicoli = concessionario.getListcars (); ////I will ask Fabiano get or set????
             for (Veicolo veicolo : listVeicoli) {
                 if (veicolo instanceof Autoveicolo) {
+                    //Verify if this Autoveicolo exist or not!!!!
                     Autoveicolo v = (Autoveicolo) veicolo;
-                    autoveicoloDao.insertAutoveicoli (v.getMarca (), v.getModello (), v.getIva (), v.getNbr_door ());
-                } else if (veicolo instanceof Autocarri) {
-                    Autocarri c = (Autocarri) veicolo;
-                    autocarriDao.insertAutocarri (c.getNbr_telaio (), c.getMarca (), c.getModello (), c.getIva (), c.getMax_capacity (), c.getImage ());
-                    System.out.println ("inserted" + concessionario + c);
+                    AutoveicoloPO autoveicoloPO = autoveicoloDao.getAutoByID (autoveicoliMapperBo.mapinverse(v).getNbr_telaio ());
+                    if (autoveicoloPO.getNbr_telaio ()==0){ //Autoveicolo dont exist in DB
+                        logger.info ("the veicolo don't exist in the DB");
+                        autoveicoloDao.insertAutoveicoli (v.getMarca (), v.getModello (), v.getIva (), v.getNbr_door ());
+                    }
+                    else {
+                        logger.error ("this autoveicolo is already exist in the DB");
+                    }
                 }
-
+                else if (veicolo instanceof Autocarri) {
+                    //Verify if this Autocarri exist or not !!!
+                    Autocarri c = (Autocarri) veicolo;
+                    AutocarriPO autocarriPO = autocarriDao.findAutoByid (autocarriMapperBo.mappinverse (c).getNbr_telaio ());
+                    if (autocarriPO.getNbr_telaio ()==0){   //this autocarri dont exist in the DB
+                        logger.info ("Inserting autocarri in DB");
+                        autocarriDao.insertAutocarri (c.getNbr_telaio (), c.getMarca (), c.getModello (), c.getIva (), c.getMax_capacity (), c.getImage ());
+                    }
+                    else {
+                        logger.error ("this autoveicolo already exist");}
+                }
+            }
+        }
+        else{
+           logger.error ("this Concessionario already exist in the DB!!");
         }
     };
 

@@ -42,31 +42,16 @@ public class ImportExport {
     @Test
     public void insertConcessionarioTest(){
         BasicConfigurator.configure();
-        Concessionario newConc = new Concessionario ();
-        newConc = this.concessionnarioRepository.getConcessionarioById (1);
-        System.out.println ("resultfindone"+newConc);
-        if (newConc.getIva () == 0){
-            logger.info ("Inserting New Concessionario in progress");
-            List<Veicolo> listcars = new ArrayList<> ();
-            Autocarri autoc = new Autocarri (1,"marca","modello",1,4);
-            Autoveicolo autov = new Autoveicolo(1,"ferrari1","serie 1",1,7);
-            listcars.add (autoc);
-            listcars.add (autov);
-            Concessionario concessionario = new Concessionario(1,"dhia","como","avenue  Dolce",listcars);
-            ConRepo.insertConcessionario(concessionario);}
-            else{
-            logger.warn ("Concessionario Already Exist,Inserting Veicoli");
-            AutocarriRepository autocarriRepository = new AutocarriRepository ();
-            AutoveicoliRepository autoveicoliRepository = new AutoveicoliRepository ();
-            Autocarri autoc = new Autocarri (3,"marca2","modello",1,4);
-            Autoveicolo autov = new Autoveicolo(3,"ferrari2","serie 1",1,7);
-            autocarriRepository.insertAutocarri (autoc);
-            autoveicoliRepository.insertAutoveicolii (autov);
-
-            }
-
-        assertNotNull(ConRepo);
-    }
+        Autocarri autoc = new Autocarri (7,"marca","modello",5,4);
+        Autoveicolo autov = new Autoveicolo(7,"ferrari1","serie 1",5,7);
+        Autocarri autoc1 = new Autocarri (6,"marca","modello",5,4);
+        Autoveicolo autov1 = new Autoveicolo(6,"ferrari1","serie 1",5,7);
+        List<Veicolo> listcars = new ArrayList<> ();
+        listcars.add (autoc);
+        listcars.add (autov);
+        Concessionario concessionario = new Concessionario(6,"chichou","venice","avenue due",listcars);
+        ConRepo.insertConcessionario(concessionario);
+        }
     @Test
     public void importAutoc()  {
         String pathurl = "C:\\Users\\mohsassi\\Desktop\\lambda1.csv";

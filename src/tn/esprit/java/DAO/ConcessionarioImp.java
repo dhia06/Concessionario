@@ -1,6 +1,7 @@
 package tn.esprit.java.DAO;
 
 import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import tn.esprit.java.Mapper.ConcessionarioMapper;
 import tn.esprit.java.PO.ConcessionarioPO;
@@ -22,7 +23,7 @@ public class ConcessionarioImp implements ConcessionarioDao {
             //establish connection
             Connection connection = DriverManager.getConnection(dbURL ,username,password);
             if(connection != null) {
-
+                logger.setLevel (Level.INFO);
                 logger.info ("Connection  established");
             }
             else {

@@ -126,7 +126,7 @@ public class AutocarriDaoImpl implements AutocarriDao {
     public AutocarriPO findAutoByid(int nbr_telaio) {
         BasicConfigurator.configure();
 
-        AutocarriPO autocarri = null;
+        AutocarriPO autocarri = new AutocarriPO ();
         try{
             //establish connection
             Connection connection = DriverManager.getConnection(dbURL ,username,password);
